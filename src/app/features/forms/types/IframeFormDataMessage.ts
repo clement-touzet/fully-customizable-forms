@@ -1,4 +1,6 @@
+import { FormField } from "@/app/features/forms/types/FormField";
+
 export type IframeFormMessageData = {
   type: "update";
-  myNumber: 3;
+  fields: FormField[];
 };
