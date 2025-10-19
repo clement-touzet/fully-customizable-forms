@@ -3,7 +3,7 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { FormField } from "@/app/features/forms/types/FormField";
 import { IframeFormMessageData } from "@/app/features/forms/types/IframeFormDataMessage";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import React, { use, useEffect, useState } from "react";
 
 type Props = {

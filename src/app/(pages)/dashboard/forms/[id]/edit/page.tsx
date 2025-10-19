@@ -7,7 +7,7 @@ import {
 } from "@/app/components/ui/tabs";
 import FormFieldItem from "@/app/features/forms/components/edit/FormFieldItem";
 import { FormField } from "@/app/features/forms/types/FormField";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { Eye, Plus } from "lucide-react";
 import Link from "next/link";
 import React, { use, useState } from "react";

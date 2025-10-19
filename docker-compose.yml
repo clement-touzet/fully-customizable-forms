@@ -1,0 +1,17 @@
+# voici le docker compose pour faire une db postgresql
+
+services:
+  db:
+    container_name: customisable-forms
+    restart: always
+    image: postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - postgres-data-custom-forms:/var/lib/postgresql/data
+    ports:
+      - ${DB_PORT}:5432
+volumes:
+  postgres-data-custom-forms:

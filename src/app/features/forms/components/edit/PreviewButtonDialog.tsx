@@ -5,7 +5,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { Eye } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 

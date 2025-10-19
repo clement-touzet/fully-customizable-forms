@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import {
   Delete,
