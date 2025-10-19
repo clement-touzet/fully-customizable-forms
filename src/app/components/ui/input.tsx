@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/app/lib/utils"
+import { cn } from "@/app/lib/utils";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
@@ -15,7 +15,27 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Input }
+// function TextInputField({ field, ...props }: {
+//   field:
+// } & React.ComponentProps<"input">) {
+//   const field = useFieldContext<string>()
+//   const errorMessage = field.state.meta.errors?.[0]?.message;
+
+//   return (
+//     <Input
+//       type="text"
+//       id={field.name}
+//       name={field.name}
+//       value={field.state.value}
+//       onChange={(e) => field.handleChange(e.target.value)}
+//       onBlur={field.handleBlur}
+//       aria-invalid={!!errorMessage}
+//       {...props}
+//     />
+//   );
+// }
+
+export { Input };

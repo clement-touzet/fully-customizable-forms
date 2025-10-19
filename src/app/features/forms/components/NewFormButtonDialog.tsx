@@ -14,7 +14,7 @@ import createFormAction from "@/app/features/forms/actions/createFormAction";
 import { FORM_NAME_FIELD_NAME } from "@/app/features/forms/constants/formFieldNames";
 import { initialFormState } from "@tanstack/react-form/nextjs";
 import { Plus } from "lucide-react";
-import React, { useActionState, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import {
   mergeForm,
   useForm,
@@ -36,10 +36,16 @@ import {
 type Props = {};
 const NewFormButtonDialog = (props: Props) => {
   const [open, setOpen] = useState(false);
-  const [actionState, createAction] = useActionState(createFormAction, {
-    ...initialFormState,
-    values: defaultFormFormOptionsValues,
-  });
+  const [actionState, createAction, isLoading] = useActionState(
+    createFormAction,
+    {
+      formState: {
+        ...initialFormState,
+        values: defaultFormFormOptionsValues,
+      },
+      success: false,
+    }
+  );
 
   const {
     handleSubmit,
@@ -50,7 +56,7 @@ const NewFormButtonDialog = (props: Props) => {
   } = useForm({
     ...createFormFormOptions,
     transform: useTransform(
-      (baseForm) => mergeForm(baseForm, actionState!),
+      (baseForm) => mergeForm(baseForm, actionState.formState!),
       [actionState]
     ),
     validators: {
@@ -61,13 +67,19 @@ const NewFormButtonDialog = (props: Props) => {
     },
   });
 
+  useEffect(() => {
+    if (!actionState) return;
+    console.log("action state", actionState);
+    if (actionState.success) {
+      setOpen(() => false);
+      reset();
+    }
+  }, [actionState]);
+
   const handleCancelClick = () => {
     setOpen(() => false);
     reset();
   };
-
-  const formErrors = useStore(store, (formState) => formState.errors);
-  console.log("form errrors", formErrors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -98,6 +110,7 @@ const NewFormButtonDialog = (props: Props) => {
                           Nom du formulaire
                         </FieldLabel>
                         <Input
+                          type="text"
                           id={field.name}
                           name={field.name}
                           placeholder="Nom"
@@ -119,6 +132,7 @@ const NewFormButtonDialog = (props: Props) => {
               <Subscribe
                 selector={(state) => [state.canSubmit, state.isSubmitting]}
                 children={([canSubmit, isSubmitting]) => {
+                  const disableValidate = !canSubmit || isLoading;
                   return (
                     <Field orientation="responsive">
                       <Button

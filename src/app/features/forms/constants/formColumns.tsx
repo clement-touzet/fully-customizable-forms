@@ -1,28 +1,20 @@
 "use client";
-import { DataType } from "@/app/(pages)/dashboard/forms/page";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { Button } from "@/app/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  Delete,
-  Edit,
-  Eye,
-  MoreHorizontal,
-  PencilLineIcon,
-  Trash,
-  Trash2,
-} from "lucide-react";
+import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import deleteFormAction from "@/app/features/forms/actions/deleteFormAction";
+import { MouseEvent } from "react";
+import { FormTableSelectType } from "@/db/drizzle/schemas";
 
-export const formsColumns: ColumnDef<DataType>[] = [
+export const formsColumns: ColumnDef<FormTableSelectType>[] = [
   {
     accessorKey: "name",
     header: "Nom",
@@ -30,6 +22,12 @@ export const formsColumns: ColumnDef<DataType>[] = [
   {
     id: "action",
     cell: ({ row }) => {
+      const currentForm = row.original;
+
+      const handleDeleteClick = (event: MouseEvent<HTMLDivElement>) => {
+        event.stopPropagation();
+        deleteFormAction(currentForm.id);
+      };
       return (
         <div className="flex justify-end w-full">
           <DropdownMenu>
@@ -53,7 +51,10 @@ export const formsColumns: ColumnDef<DataType>[] = [
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem variant="destructive">
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={handleDeleteClick}
+              >
                 <Trash2 />
                 Supprimer
               </DropdownMenuItem>
