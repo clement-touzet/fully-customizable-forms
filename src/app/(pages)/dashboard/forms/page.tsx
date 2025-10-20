@@ -4,30 +4,6 @@ import React from "react";
 import NewFormButtonDialog from "@/app/features/forms/components/NewFormButtonDialog";
 import { db } from "@/db/drizzle/db";
 
-export type DataType = {
-  id: string;
-  name: string;
-};
-
-const data: DataType[] = [
-  {
-    id: "1",
-    name: "Mon formulaire",
-  },
-  {
-    id: "2",
-    name: "Lead aquisition",
-  },
-  {
-    id: "3",
-    name: "Questionnaire satisfaction",
-  },
-  {
-    id: "4",
-    name: "Formulaire de test",
-  },
-];
-
 const FormsPage = async () => {
   const forms = await db.query.formTable.findMany();
 

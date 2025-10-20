@@ -1,5 +1,4 @@
 "use client";
-import { DataType } from "@/app/(pages)/dashboard/forms/page";
 import {
   Table,
   TableBody,
@@ -8,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
+import { FormTableSelectType } from "@/db/drizzle/schemas";
 import {
   ColumnDef,
   flexRender,
@@ -25,7 +25,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<FormTableSelectType, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -33,7 +33,7 @@ export function DataTable<TData, TValue>({
   });
   const router = useRouter();
 
-  const handleClickGoToEditForm = (id: DataType["id"]) => {
+  const handleClickGoToEditForm = (id: FormTableSelectType["id"]) => {
     router.push(`/dashboard/forms/${id}/edit`);
   };
 
@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
                 className="cursor-pointer"
-                onClick={() => handleClickGoToEditForm(row.id)}
+                onClick={() => handleClickGoToEditForm(row.original.id)}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
