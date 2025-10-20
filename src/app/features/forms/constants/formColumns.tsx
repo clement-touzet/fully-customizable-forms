@@ -39,13 +39,25 @@ export const formsColumns: ColumnDef<FormTableSelectType>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/forms/${row.id}`} target="_blank">
+                <Link
+                  href={`/dashboard/forms/${currentForm.id}`}
+                  target="_blank"
+                  onClick={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                    e.stopPropagation()
+                  }
+                >
                   <Eye />
                   Voir
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/forms/${row.id}/edit`} target="_blank">
+                <Link
+                  href={`/dashboard/forms/${currentForm.id}/edit`}
+                  target="_blank"
+                  onClick={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                    e.stopPropagation()
+                  }
+                >
                   <Edit />
                   Modifier
                 </Link>
