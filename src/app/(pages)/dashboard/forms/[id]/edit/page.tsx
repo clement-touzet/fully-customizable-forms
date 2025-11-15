@@ -10,8 +10,9 @@ import { FormField } from "@/app/features/forms/types/FormField";
 import { Button } from "@/app/components/ui/button";
 import { Eye, Plus } from "lucide-react";
 import Link from "next/link";
-import React, { use, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import AddCustomizableFormDialog from "@/app/features/forms/components/edit/AddCustomizableFormDialog";
+import { IframeFormMessageData } from "@/app/features/forms/types/IframeFormDataMessage";
 
 const tabValues = {
   FIELDS: "fields",
@@ -24,7 +25,7 @@ type Props = {
 
 const EditFormPage = ({ params }: Props) => {
   const { id: formId } = use(params);
-  // const iframeRef = useRef<HTMLIFrameElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [formFields, setFormFields] = useState<FormField[]>([
     {
       type: "input",
@@ -48,22 +49,28 @@ const EditFormPage = ({ params }: Props) => {
     },
   ]);
 
-  // const onRefreshPreview = () => {
-  //   const messageData: IframeFormMessageData = {
-  //     type: "update",
-  //     fields: formFields,
-  //   };
-  //   console.log(
-  //     "refresh preview",
-  //     iframeRef.current?.contentWindow,
-  //     messageData
-  //   );
-  //   // console.log("iframeRef", iframeRef, "message", messageData);
-  //   iframeRef.current?.contentWindow?.postMessage(
-  //     messageData,
-  //     "http://localhost:3000"
-  //   );
-  // };
+  const onIframeLoad = () => {
+    console.log("iframe loaded from parent");
+
+    const loadedEventListener = (message: any) => {
+      const messageData: IframeFormMessageData = {
+        type: "update",
+        fields: formFields,
+      };
+      iframeRef.current?.contentWindow?.postMessage(
+        messageData,
+        "http://localhost:3000"
+      );
+      iframeRef.current?.contentWindow?.removeEventListener(
+        "message",
+        loadedEventListener
+      );
+    };
+    iframeRef.current?.contentWindow?.addEventListener(
+      "message",
+      loadedEventListener
+    );
+  };
 
   return (
     <div>
@@ -111,8 +118,10 @@ const EditFormPage = ({ params }: Props) => {
         </Tabs>
         <div className="m-4">
           <iframe
+            ref={iframeRef}
             src={`/dashboard/forms/${formId}`}
             className="h-full w-full border-2 border-blue-200 rounded-xl p-2"
+            onLoad={onIframeLoad}
           />
         </div>
       </div>

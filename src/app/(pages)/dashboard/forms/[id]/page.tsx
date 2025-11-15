@@ -23,6 +23,7 @@ const FormPage = ({ params }: Props) => {
     };
     console.log("component rendered ");
     window.addEventListener("message", handleMessage);
+    window.postMessage("OKAY", "http://localhost:3000");
 
     return () => {
       window.removeEventListener("message", handleMessage);
@@ -35,8 +36,9 @@ const FormPage = ({ params }: Props) => {
     <div className="">
       <form className="flex flex-col gap-2 max-w-xl mx-auto justify-center items-center">
         {previewData?.map((formField) => {
+          let field: React.ReactNode | null = null;
           if (formField.type === "input") {
-            return (
+            field = (
               <>
                 <Label>{formField.label ? formField.label : ""}</Label>
                 <Input type="text"></Input>
@@ -44,7 +46,7 @@ const FormPage = ({ params }: Props) => {
             );
           }
           if (formField.type === "checkbox-group") {
-            return (
+            field = (
               <>
                 <Label>{formField.label ? formField.label : ""}</Label>
                 <Input type="checkbox"></Input>
@@ -52,13 +54,14 @@ const FormPage = ({ params }: Props) => {
             );
           }
           if (formField.type === "radio-group") {
-            return (
+            field = (
               <>
                 <Label>{formField.label ? formField.label : ""}</Label>
                 <Input type="radio"></Input>
               </>
             );
-          } else return <></>;
+          }
+          return <div>{field}</div>;
         })}
         <Button>Submit</Button>
       </form>
