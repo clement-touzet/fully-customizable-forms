@@ -5,6 +5,8 @@ import { FormField } from "@/app/features/forms/types/FormField";
 import { IframeFormMessageData } from "@/app/features/forms/types/IframeFormDataMessage";
 import { Button } from "@/app/components/ui/button";
 import React, { use, useEffect, useState } from "react";
+import { Checkbox } from "@/app/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -47,21 +49,28 @@ const FormPage = ({ params }: Props) => {
           }
           if (formField.type === "checkbox-group") {
             field = (
-              <>
+              <div className="flex items-center gap-3">
+                <Checkbox></Checkbox>
                 <Label>{formField.label ? formField.label : ""}</Label>
-                <Input type="checkbox"></Input>
-              </>
+              </div>
             );
           }
           if (formField.type === "radio-group") {
             field = (
-              <>
+              <RadioGroup defaultValue="non">
                 <Label>{formField.label ? formField.label : ""}</Label>
-                <Input type="radio"></Input>
-              </>
+                <div className="flex items-center gap-3">
+                  <RadioGroupItem value="oui" />
+                  <Label>Oui</Label>
+                </div>
+                <div className="flex items-center gap-3">
+                  <RadioGroupItem value="non" />
+                  <Label>Non</Label>
+                </div>
+              </RadioGroup>
             );
           }
-          return <div>{field}</div>;
+          return <div key={formField.id}>{field}</div>;
         })}
         <Button>Submit</Button>
       </form>
