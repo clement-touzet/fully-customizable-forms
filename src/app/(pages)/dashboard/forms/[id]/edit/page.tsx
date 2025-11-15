@@ -11,6 +11,7 @@ import { Button } from "@/app/components/ui/button";
 import { Eye, Plus } from "lucide-react";
 import Link from "next/link";
 import React, { use, useState } from "react";
+import AddCustomizableFormDialog from "@/app/features/forms/components/edit/AddCustomizableFormDialog";
 
 const tabValues = {
   FIELDS: "fields",
@@ -81,36 +82,40 @@ const EditFormPage = ({ params }: Props) => {
           </Link>
         </Button>
       </div>
-
-      <Tabs defaultValue={tabValues.FIELDS} className="py-8 max-w-xl mx-auto">
-        <div className="flex justify-center">
-          <TabsList className="">
-            <TabsTrigger value={tabValues.FIELDS}>Champs</TabsTrigger>
-            <TabsTrigger value={tabValues.DATA_VALIDATION}>
-              Validation des données
-            </TabsTrigger>
-          </TabsList>
-        </div>
-        <TabsContent value={tabValues.FIELDS}>
-          <p className="text-muted-foreground pb-2">Elements du formulaire</p>
-          <div className="pb-4 flex flex-col gap-2">
-            {formFields.map((formField, index) => {
-              return (
-                <FormFieldItem
-                  key={formField.id}
-                  formField={formField}
-                  index={index}
-                />
-              );
-            })}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <Tabs defaultValue={tabValues.FIELDS} className="py-8 max-w-xl mx-auto">
+          <div className="flex justify-center">
+            <TabsList className="">
+              <TabsTrigger value={tabValues.FIELDS}>Champs</TabsTrigger>
+              <TabsTrigger value={tabValues.DATA_VALIDATION}>
+                Validation des données
+              </TabsTrigger>
+            </TabsList>
           </div>
-          <Button>
-            <Plus />
-            Nouveau champ
-          </Button>
-        </TabsContent>
-        <TabsContent value={tabValues.DATA_VALIDATION}></TabsContent>
-      </Tabs>
+          <TabsContent value={tabValues.FIELDS}>
+            <p className="text-muted-foreground pb-2">Elements du formulaire</p>
+            <div className="pb-4 flex flex-col gap-2">
+              {formFields.map((formField, index) => {
+                return (
+                  <FormFieldItem
+                    key={formField.id}
+                    formField={formField}
+                    index={index}
+                  />
+                );
+              })}
+            </div>
+            <AddCustomizableFormDialog />
+          </TabsContent>
+          <TabsContent value={tabValues.DATA_VALIDATION}></TabsContent>
+        </Tabs>
+        <div className="m-4">
+          <iframe
+            src={`/dashboard/forms/${formId}`}
+            className="h-full w-full border-2 border-blue-200 rounded-xl p-2"
+          />
+        </div>
+      </div>
     </div>
   );
 };
