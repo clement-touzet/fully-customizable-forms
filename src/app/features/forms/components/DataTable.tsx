@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-import { FormTableSelectType } from "@/db/drizzle/schemas";
+import { FormTableType } from "@/db/drizzle/schemas";
 import {
   ColumnDef,
   flexRender,
@@ -25,7 +25,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<FormTableSelectType, TValue>) {
+}: DataTableProps<FormTableType, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -33,7 +33,7 @@ export function DataTable<TData, TValue>({
   });
   const router = useRouter();
 
-  const handleClickGoToEditForm = (id: FormTableSelectType["id"]) => {
+  const handleClickGoToEditForm = (id: FormTableType["id"]) => {
     router.push(`/dashboard/forms/${id}/edit`);
   };
 

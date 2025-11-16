@@ -5,7 +5,7 @@ import NewFormButtonDialog from "@/app/features/forms/components/NewFormButtonDi
 import { db } from "@/db/drizzle/db";
 
 const FormsPage = async () => {
-  const forms = await db.query.formTable.findMany();
+  const forms = await db.query.FormTable.findMany();
 
   return (
     <div className="container px-8 md:mx-auto py-10 flex flex-col gap-4">

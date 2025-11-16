@@ -3,9 +3,9 @@ import { pgEnum } from "drizzle-orm/pg-core";
 import { createSelectSchema } from "drizzle-zod";
 
 export enum FormFieldTypeEnum {
-  INPUT = "input",
-  RADIO_GROUP = "radio-group",
-  CHECKBOX = "checkbox",
+  Input = "input",
+  RadioGroup = "radio-group",
+  Checkbox = "checkbox",
 }
 
 export const FormFieldTypePgEnum = pgEnum(

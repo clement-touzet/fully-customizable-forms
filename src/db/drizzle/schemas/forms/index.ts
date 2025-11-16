@@ -1,2 +1,2 @@
-export * from "./formFieldTable";
-export * from "./formTable";
+export * from "./FormFieldTable";
+export * from "./FormTable";

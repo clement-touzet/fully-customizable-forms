@@ -1,19 +1,22 @@
 "use client";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import { FormField } from "@/app/features/forms/types/FormField";
 import { IframeFormMessageData } from "@/app/features/forms/types/IframeFormDataMessage";
 import { Button } from "@/app/components/ui/button";
 import React, { use, useEffect, useState } from "react";
 import { Checkbox } from "@/app/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
+import {
+  FormFieldTableInsertType,
+  FormFieldTypeEnum,
+} from "@/db/drizzle/schemas";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
 const FormPage = ({ params }: Props) => {
-  const [previewData, setPreviewData] = useState<FormField[]>();
+  const [previewData, setPreviewData] = useState<FormFieldTableInsertType[]>();
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -39,7 +42,7 @@ const FormPage = ({ params }: Props) => {
       <form className="flex flex-col gap-2 max-w-xl mx-auto justify-center items-center">
         {previewData?.map((formField) => {
           let field: React.ReactNode | null = null;
-          if (formField.type === "input") {
+          if (formField.type === FormFieldTypeEnum.Input) {
             field = (
               <>
                 <Label>{formField.label ? formField.label : ""}</Label>
@@ -47,7 +50,7 @@ const FormPage = ({ params }: Props) => {
               </>
             );
           }
-          if (formField.type === "checkbox-group") {
+          if (formField.type === FormFieldTypeEnum.Checkbox) {
             field = (
               <div className="flex items-center gap-3">
                 <Checkbox></Checkbox>
@@ -55,7 +58,7 @@ const FormPage = ({ params }: Props) => {
               </div>
             );
           }
-          if (formField.type === "radio-group") {
+          if (formField.type === FormFieldTypeEnum.RadioGroup) {
             field = (
               <RadioGroup defaultValue="non">
                 <Label>{formField.label ? formField.label : ""}</Label>

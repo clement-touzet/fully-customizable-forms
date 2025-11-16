@@ -1,6 +1,6 @@
-import { FormField } from "@/app/features/forms/types/FormField";
+import { FormFieldTableInsertType } from "@/db/drizzle/schemas";
 
 export type IframeFormMessageData = {
   type: "update";
-  fields: FormField[];
+  fields: FormFieldTableInsertType[];
 };

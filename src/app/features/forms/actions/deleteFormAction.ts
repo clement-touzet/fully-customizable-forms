@@ -2,12 +2,12 @@
 
 import { formsPath } from "@/app/constants/paths";
 import { db } from "@/db/drizzle/db";
-import { formTable, FormTableSelectType } from "@/db/drizzle/schemas";
+import { FormTable, FormTableType } from "@/db/drizzle/schemas";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-const deleteFormAction = async (formIdToDelete: FormTableSelectType["id"]) => {
-  await db.delete(formTable).where(eq(formTable.id, formIdToDelete));
+const deleteFormAction = async (formIdToDelete: FormTableType["id"]) => {
+  await db.delete(FormTable).where(eq(FormTable.id, formIdToDelete));
   revalidatePath(formsPath);
 };
 

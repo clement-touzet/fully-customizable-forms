@@ -12,9 +12,9 @@ import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
 import Link from "next/link";
 import deleteFormAction from "@/app/features/forms/actions/deleteFormAction";
 import { MouseEvent } from "react";
-import { FormTableSelectType } from "@/db/drizzle/schemas";
+import { FormTableType } from "@/db/drizzle/schemas";
 
-export const formsColumns: ColumnDef<FormTableSelectType>[] = [
+export const formsColumns: ColumnDef<FormTableType>[] = [
   {
     accessorKey: "name",
     header: "Nom",

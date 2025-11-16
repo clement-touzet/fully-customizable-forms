@@ -1,19 +1,34 @@
 import { Item } from "@/app/components/ui/item";
-import { FormField } from "@/app/features/forms/types/FormField";
 import {
   Check,
   CheckSquare,
   CircleDot,
   GripVertical,
+  LucideIcon,
   Square,
   TextCursorInput,
 } from "lucide-react";
 import React from "react";
 import { useSortable } from "@dnd-kit/react/sortable";
+import {
+  FormFieldTableInsertType,
+  FormFieldTypeEnum,
+} from "@/db/drizzle/schemas";
 
 type Props = {
-  formField: FormField;
+  formField: FormFieldTableInsertType;
   index: number;
+};
+
+const fieldConfig: Record<
+  FormFieldTypeEnum,
+  {
+    icon: LucideIcon;
+  }
+> = {
+  [FormFieldTypeEnum.Input]: { icon: TextCursorInput },
+  [FormFieldTypeEnum.Checkbox]: { icon: CheckSquare },
+  [FormFieldTypeEnum.RadioGroup]: { icon: CircleDot },
 };
 
 const FormFieldItem = ({ formField, index }: Props) => {
@@ -24,6 +39,8 @@ const FormFieldItem = ({ formField, index }: Props) => {
     accept: "item",
   });
 
+  const Icon = fieldConfig[formField.type].icon;
+
   return (
     <Item
       variant="outline"
@@ -32,10 +49,7 @@ const FormFieldItem = ({ formField, index }: Props) => {
       color=""
     >
       <GripVertical size={16} opacity={0.6} className="hover:cursor-grab" />
-      {formField.type === "input" ? <TextCursorInput /> : null}
-      {formField.type === "checkbox-group" ? <CheckSquare /> : null}
-      {formField.type === "radio-group" ? <CircleDot /> : null}
-
+      {<Icon />}
       <p>{formField.label}</p>
     </Item>
   );

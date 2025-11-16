@@ -4,9 +4,9 @@ import {
 } from "@/app/features/forms/constants/formFieldNames";
 import {
   FormTableInsertType,
-  FormTableSelectType,
-} from "@/db/drizzle/schemas/forms/formTable";
-import { formOptions } from "@tanstack/react-form/nextjs";
+  FormTableType,
+} from "@/db/drizzle/schemas/forms/FormTable";
+import { formOptions } from "@tanstack/react-form";
 
 export const defaultFormFormOptionsValues: FormTableInsertType = {
   [FORM_NAME_FIELD_NAME]: DEFAULT_FORM_NAME_VALUE,
